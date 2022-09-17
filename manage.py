@@ -41,5 +41,3 @@ app, cache = create_app()
 pagination = Pagination(app, db)
 if __name__ == '__main__':
     app.run(debug=True)
-    # app.run(host=copia_utilities_config.HOST, port=copia_utilities_config.PORT,
-    #         debug=copia_utilities_config.DEBUG)
