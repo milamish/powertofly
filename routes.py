@@ -1,6 +1,7 @@
-from views.users import GetUsers, GetUsersByID
+from views.users import GetUsers, GetUsersByID, GetUsersByRangeandLimit
 
 routes = [
-    (GetUsers,"/user/get/limit/<int:limit>"),
-    (GetUsersByID,"/user/get/id/<int:user_id>")
+    (GetUsers, "/user/get"),
+    (GetUsersByID, "/user/get/id"),
+    (GetUsersByRangeandLimit, "/user/get/ranges")
 ]
