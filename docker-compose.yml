@@ -1,15 +1,15 @@
-version: "3.2"
+version: "3.8"
 services:
     test_db:
         image: postgres:latest
         volumes:
             - ./db-data:/var/lib/postgresql/data
         ports:
-            - 5435:5432
+            - 5438:5432
         environment:
             - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=copia
-            - POSTGRES_DB=test
+            - POSTGRES_PASSWORD=test
+            - POSTGRES_DB=test_db
         restart: unless-stopped
 
 
@@ -17,17 +17,33 @@ services:
         build:
             context: api/
             dockerfile: Dockerfile
-        container_name: taya_api
+        container_name: api
         depends_on:
-            - tatay_db
+            - test_db
         volumes:
-            - ./api:/Taya
-        expose:
-            - 5000
+            - ./api:/App
+        ports:
+            - 5001:5000
         environment:
             - ENV=dev
             - PYTHONPATH=/app
-            - SECRET_KEY=TayaSecretForLocal
-            - DATABASE_URL=postgresql://postgres:copia@test_db/test_db
-            - API_ADDRESS=http://0.0.0.0:5000/api
+            - SECRET_KEY=MishSecretForLocal
+            - DATABASE_URL=postgresql://postgres:test@test_db/test_db
+            - API_ADDRESS=http://0.0.0.0:5000/
+            - PYTHONUNBUFFERED=TRUE
         tty: true
+
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        container_name: admin_container
+        depends_on:
+            - test_db
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=admin@mail.com
+            - PGADMIN_DEFAULT_PASSWORD=pgadmin
+        volumes:
+            - ./db-data:/root/.pgadmin
+        ports:
+            - 84:80
+        restart: unless-stopped
+
