@@ -3,7 +3,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config:
+class Configs:
     SECRET_KEY = os.getenv('SECRET_KEY', 'the_safe_sms_app_secret')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     # SQLALCHEMY_DATABASE_URI = "postgresql://postgres:test@localhost/test"
