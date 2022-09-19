@@ -3,7 +3,7 @@ import decimal
 import logging
 
 from config import Config
-from sqlalchemy import create_engine, Column, Integer, DateTime
+from sqlalchemy import create_engine, Column, Integer
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 DB_URI = Config.SQLALCHEMY_DATABASE_URI

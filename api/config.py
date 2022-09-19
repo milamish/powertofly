@@ -5,14 +5,19 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'the_safe_sms_app_secret')
-    # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:copia@localhost/test"
-    API_ADDRESS = 'http://127.0.0.1:5000/api/'
-    WEBHOOK_POINT = 'message/webhook'
-    # SWAGGER_ADDRESS = API_ADDRESS + '/admin/swagger.json'
-    SWAGGER_ADDRESS = '/admin/swagger.json'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    # SQLALCHEMY_DATABASE_URI = "postgresql://postgres:test@localhost/test"
+    API_ADDRESS = 'http://127.0.0.1:5000/'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
+
+class BaseConfig(object):
+    CACHE_TYPE = 'redis'
+    CACHE_REDIS_HOST = 'redis'
+    CACHE_REDIS_PORT = 6379
+    CACHE_REDIS_DB = 0
+    CACHE_REDIS_URL = 'redis: // redis: 6379 / 0'
+    CACHE_DEFAULT_TIMEOUT = 500
 
 
 class DevelopmentConfig(Config):

@@ -16,3 +16,5 @@ class BaseResource(MethodResource, Resource):
         response = super(BaseResource, self).dispatch_request(*args, **kwargs)
         app.logger.info(f"Returned response {response.json}")
         return response
+
+

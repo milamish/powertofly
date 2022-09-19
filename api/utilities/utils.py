@@ -1,9 +1,11 @@
 from functools import wraps
 from typing import Callable, Any, Tuple
 
-from flask import current_app as app, current_app, g
+from flask import current_app as app
 from flask_restful import abort
-from marshmallow import ValidationError as MarshmallowValidationError
+
+from datetime import datetime, timedelta
+from flask import Response
 from werkzeug.exceptions import UnprocessableEntity
 
 
@@ -62,32 +64,20 @@ error_schema = {
     }
 }
 
-'''
-def get_app_package_name(package_name):
-    with SqlAlchemySession() as session:
-        repo = CopiaAndroidAppRepository(session)
-        return repo.get_record_with_(package_name=package_name)
 
+def docache(minutes=5, content_type='application/json; charset=utf-8'):
+    """ Flask decorator that allow to set Expire and Cache headers. """
 
-@pool
-def get_or_create_access_token(cr, user_id):
-    query = """
-            select api_access_token.id, 
-              api_access_token.user_id,  
-              api_access_token.token,  
-              res_company.id company_id,	 
-              res_country.code country_code,  
-              res_currency.name currency_name,  
-              res_currency.symbol currency_symbol,  
-              res_currency.position currency_position  
-              from api_access_token    
-              join res_company on api_access_token.company_id=res_company.id   
-              join  res_partner on res_company.partner_id=res_partner.id   
-              join res_country on res_partner.country_id=res_country.id  
-              join res_currency on res_company.currency_id=res_currency.id 
-              limit 1
-          """
-    cr.execute(query)
-    return [dict(row) for row in cr.fetchall()]
+    def fwrap(f):
+        @wraps(f)
+        def wrapped_f(*args, **kwargs):
+            r = f(*args, **kwargs)
+            then = datetime.now() + timedelta(minutes=minutes)
+            rsp = Response(r, content_type=content_type)
+            rsp.headers.add('Expires', then.strftime("%a, %d %b %Y %H:%M:%S GMT"))
+            rsp.headers.add('Cache-Control', 'public,max-age=%d' % int(60 * minutes))
+            return rsp
 
-'''
+        return wrapped_f
+
+    return fwrap
