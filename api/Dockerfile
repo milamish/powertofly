@@ -22,5 +22,4 @@ ADD gunicorn_config.py /App/gunicorn_config.py
 
 ENTRYPOINT ["gunicorn", "--config", "/App/gunicorn_config.py", "-t", "600", "manage:app"]
 
-#Create a ubuntu base image with python 3 installed.
 

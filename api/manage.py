@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask.logging import create_logger
 from flask_apispec.extension import FlaskApiSpec
@@ -33,4 +35,5 @@ def create_app():
 app, cache = create_app()
 pagination = Pagination(app, db)
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)

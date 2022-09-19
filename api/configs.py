@@ -3,10 +3,10 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config:
+class Configs:
     SECRET_KEY = os.getenv('SECRET_KEY', 'the_safe_sms_app_secret')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    # SQLALCHEMY_DATABASE_URI = "postgresql://postgres:test@localhost/test"
+    # SQLALCHEMY_DATABASE_URI = "postgresql://postgres:copia@localhost/test"
     API_ADDRESS = 'http://127.0.0.1:5000/'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
@@ -20,13 +20,13 @@ class BaseConfig(object):
     CACHE_DEFAULT_TIMEOUT = 500
 
 
-class DevelopmentConfig(Config):
+class DevelopmentConfig(Configs):
     ENV = 'dev'
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-class TestingConfig(Config):
+class TestingConfig(Configs):
     ENV = 'test'
     DEBUG = True
     TESTING = True
@@ -34,7 +34,7 @@ class TestingConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-class ProductionConfig(Config):
+class ProductionConfig(Configs):
     ENV = 'prod'
     DEBUG = False
 

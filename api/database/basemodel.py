@@ -2,11 +2,11 @@ import datetime
 import decimal
 import logging
 
-from config import Config
+from configs import Configs
 from sqlalchemy import create_engine, Column, Integer
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DB_URI = Config.SQLALCHEMY_DATABASE_URI
+DB_URI = Configs.SQLALCHEMY_DATABASE_URI
 engine = create_engine(DB_URI, echo=False)
 SqlAlchemySession = sessionmaker(bind=engine)
 
