@@ -11,6 +11,7 @@ et-xmlfile==1.1.0
 Flask==2.2.2
 flask-apispec==0.11.4
 Flask-Caching==1.10.1
+Flask-CacheControl==0.3.0
 flask-marshmallow==0.14.0
 flask-rest-api==0.17.1
 flask-rest-paginate==1.1.3
